@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+</head>
+<body>
+
+  <form action="/submit">
+
+    <!-- ❌ Wrong: <label Name="username"> -->
+    <!-- ✅ Corrected: Use 'for' to associate with input id -->
+    <label for="username">Enter Username:</label>
+
+    <!-- ✅ Input is valid, added 'required' for better UX -->
+    <input type="text" id="username" name="username" required>
+
+    <br><br>
+
+    <!-- ✅ Label is correctly using 'for' to link with input -->
+    <label for="passcode">Password:</label>
+
+    <!-- ✅ Input is valid, added 'required' -->
+    <input type="password" id="passcode" name="password" required>
+
+    <br><br>
+
+    <!-- ❌ Wrong: <button Submit> -->
+    <!-- ✅ Corrected: <button type="submit"> -->
+    <button type="submit">Submit Form</button>
+
+  </form>
+
+</body>
+</html>
