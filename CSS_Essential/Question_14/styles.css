@@ -1,0 +1,7 @@
+/* External CSS:
+   This styling is applied to the div with id="main-container" */
+#main-container {
+  padding: 20px;             /* Adds space inside the div */
+  border: 1px solid #ccc;    /* Light gray border */
+  background-color: #e6e6e6; /* Light gray background */
+}

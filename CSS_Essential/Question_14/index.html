@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-Method CSS Example</title>
+  
+  <!-- Internal CSS -->
+  <style>
+    h1 {
+      color: navy;
+      font-size: 28px;
+      background-color: #f0f0f0; /* FIXED: Added two extra digits for valid hex color */
+    }
+    .highlighted-text {
+      background-color: yellow;
+      color: red;
+    }
+  </style>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Internal CSS applies here -->
+  <h1>Main Title</h1>
+
+  <!-- Inline CSS -->
+  <p style="font-size: 16px; color: #333;">This paragraph has inline styles applied.</p> <!-- FIXED: Hex color shortened to #333 -->
+
+  <!-- Internal CSS class -->
+  <p class="highlighted-text">This paragraph uses a class-based style.</p>
+
+  <!-- External CSS will apply to this div -->
+  <div id="main-container">
+    <p>This div should have styles from the external stylesheet.</p>
+  </div>
+
+</body>
+</html>

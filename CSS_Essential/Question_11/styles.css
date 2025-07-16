@@ -1,0 +1,25 @@
+/* Set background color of the entire page */
+body {
+    background-color: lightgray;
+    font-family: Arial, sans-serif;
+}
+
+/* Headings with different colors */
+h1 {
+    color: navy;
+}
+
+h2 {
+    color: darkred;
+}
+
+/* Paragraph styles */
+.para1 {
+    color: blue;
+    font-size: 20px;
+}
+
+.para2 {
+    color: green;
+    font-size: 18px;
+}
