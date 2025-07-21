@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex Direction Demo</title>
+    <style>
+        body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+
+    /* Initially: Arrange items in a row (default behavior) */
+    flex-direction: row;
+
+    /* To arrange items in a column, change to:
+       flex-direction: column;
+    */
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+    gap: 10px;
+}
+
+.item {
+    background-color: #2196F3;
+    color: white;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+    </div>
+</body>
+</html>
