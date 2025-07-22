@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>4x2 Grid</title>
+  <style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(2, 100px);
+  gap: 10px;
+}
+
+.item {
+  width: 100px;
+  height: 100px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <div class="item" style="background-color: #e74c3c;"></div>
+    <div class="item" style="background-color: #2ecc71;"></div>
+    <div class="item" style="background-color: #3498db;"></div>
+    <div class="item" style="background-color: #f1c40f;"></div>
+    <div class="item" style="background-color: #9b59b6;"></div>
+    <div class="item" style="background-color: #1abc9c;"></div>
+    <div class="item" style="background-color: #34495e;"></div>
+    <div class="item" style="background-color: #e67e22;"></div>
+  </div>
+</body>
+</html>

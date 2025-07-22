@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Strategic Investors</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  /* Updated to use Grid */
+  .top-logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 40px;
+    place-items: center;
+    margin-bottom: 40px;
+  }
+
+  .top-logos img {
+    height: 50px;
+    object-fit: contain;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+
+  .investor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .info {
+    padding: 15px;
+  }
+
+  .info h4 {
+    margin: 10px 0 5px;
+    font-size: 16px;
+  }
+
+  .info p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .brand-logo {
+    margin-top: 10px;
+    height: 20px;
+  }
+</style>
+
+
+</head>
+<body>
+  <div class="container">
+    <!-- Top Logos -->
+    <div class="top-logos">
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/capria_logo_8d99adf0dc.svg" alt="India Quotient" />
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/india_q_borderless_22288e7ee3.svg" alt="Unitus Ventures" />
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/omidyar_borderless_02412f1dfd.svg" alt="Omidyar Network India" />
+    </div>
+
+    <!-- Title -->
+    <h2 class="title">Strategic Investors</h2>
+
+    <!-- Investor Grid -->
+    <div class="investor-grid">
+      <!-- Card 1 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/Vijay_Shekhar_Sharma_Paytm_96f52579b8.jpg" alt="Vijay Shekhar Sharma" />
+        <div class="info">
+          <h4>Vijay Shekhar Sharma</h4>
+          <p>Founder & CEO</p>
+          <img src="" alt="Paytm Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/Rectangle_427_637d69bb57.png" alt="Kunal Shah" />
+        <div class="info">
+          <h4>Kunal Shah</h4>
+          <p>Founder</p>
+          <img src="" alt="CRED Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/amrish_rau_pine_labs_144e5e587c.jpg" alt="Amrish Rau" />
+        <div class="info">
+          <h4>Amrish Rau</h4>
+          <p>CEO</p>
+          <img src="pinelabs-logo.png" alt="Pine Labs Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/Sampad_swain_Instamojo_f12bf6341e.jpg" alt="Sampad Swain" />
+        <div class="info">
+          <h4>Sampad Swain</h4>
+          <p>Co-Founder & CEO</p>
+          <img src="instamojo-logo.png" alt="Instamojo Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/Ankush_Sachdeva_Sharechat_4e44dbbe6b.jpg" alt="Ankush Sachdeva" />
+        <div class="info">
+          <h4>Ankush Sachdeva</h4>
+          <p>Co-Founder & CEO</p>
+          <img src="sharechat-logo.png" alt="ShareChat Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/bhanu_pratap_singh_sharechat_11fdd7b47a.jpg" alt="Bhanu Pratap Singh" />
+        <div class="info">
+          <h4>Bhanu Pratap Singh</h4>
+          <p>Co-Founder & CTO</p>
+          <img src="sharechat-logo.png" alt="ShareChat Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/farid_ahsan_sharechat_1251f28141.png" alt="Farid Ahsan" />
+        <div class="info">
+          <h4>Farid Ahsan</h4>
+          <p>Co-Founder & COO</p>
+          <img src="sharechat-logo.png" alt="ShareChat Logo" class="brand-logo" />
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="card">
+        <img src="https://cdn.masaischool.com/masai-website/Amit_Kumar_Agarwal_Nobroker_a8a279ad91.jpg" alt="Amit Kumar Agarwal" />
+        <div class="info">
+          <h4>Amit Kumar Agarwal</h4>
+          <p>Founder & CEO</p>
+          <img src="nobroker-logo.png" alt="NoBroker Logo" class="brand-logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
