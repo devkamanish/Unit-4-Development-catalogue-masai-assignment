@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Readability</title>
+  <style>
+/* Mobile-first base styling (default for <600px) */
+body {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+/* Increase font size for larger screens (≥600px) */
+@media (min-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Welcome to My Website</h1>
+    <p>
+      This paragraph contains sample text to demonstrate responsive font sizing and readability
+      using CSS media queries and a mobile-first approach.
+    </p>
+  </div>
+</body>
+</html>
