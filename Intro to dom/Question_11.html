@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+       <h1 id="firsth1">Hey i am a heading</h1>
+
+    </div>
+    <p>Para1</p>
+    <p>Para2</p>
+    <p>Para3</p>
+    <p>Para4</p>
+
+</body>
+
+<script>
+ let heading = document.getElementById("firsth1")
+ heading.textContent = "Welcome to the DOM World!"
+
+ let selectP = document.getElementsByTagName('p')
+ for(let i=0;i<selectP.length;i++){
+  selectP[i].style.color = "blue"
+ }
+ 
+
+ let divv = document.querySelector('.container')
+ divv.style.backgroundColor = "yellow"
+</script>
+</html>

@@ -1,0 +1,5 @@
+
+1.Document node -> Refers to the doc type.
+2.Element node -> It refers to the element tag.
+3.Text node -> Represent the text in the the tag.
+4.Attribute node-> Represents to attribute given to a tag.

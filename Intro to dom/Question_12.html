@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul  id="item_list">
+        <li>Mango</li>
+        <li>Banana</li>
+        <li>Apple</li>
+    </ul>
+
+    <button id="add_button">Click me</button>
+</body>
+
+<script>
+
+    let ul = document.querySelector("ul");
+    let button = document.querySelector("#add_button")
+
+   button.addEventListener("click" ,()=>{
+    const newItem = document.createElement("li");
+    newItem.textContent = "New Item"
+    
+    let pos = ul.children.length+1;
+    if(pos %2!==0){
+        newItem.style.fontWeight = "bold";
+        newItem.style.color = "blue"
+    
+    }else{
+        newItem.style.fontStyle= "italic";
+        newItem.style.color = "red";
+    }
+
+    ul.appendChild(newItem)
+   })
+</script>
+</html>
