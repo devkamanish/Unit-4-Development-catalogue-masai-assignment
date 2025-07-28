@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enhanced Todo List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    input, button {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 5px;
+    }
+
+    #taskList {
+      list-style: none;
+      padding: 0;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .task-item {
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .task-text {
+      flex-grow: 1;
+      margin-left: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+
+  <input type="text" id="taskInput" placeholder="Enter a task" />
+  <button onclick="addTask()">Add Task</button>
+  <br><br>
+  <input type="text" id="searchInput" placeholder="Search tasks..." oninput="filterTasks()" />
+  <ul id="taskList"></ul>
+
+  <script>
+    let tasks = [];
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+      const storedTasks = localStorage.getItem("tasks");
+      if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
+      } else {
+        tasks = [];
+      }
+      renderTasks();
+    }
+
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const text = input.value.trim();
+
+      if (text === "") return;
+
+      const newTask = {
+        id: Date.now(),
+        text: text,
+        completed: false
+      };
+
+      tasks.push(newTask);
+      saveTasks();
+      renderTasks();
+
+      input.value = "";
+    }
+
+    function toggleTask(id) {
+      tasks = tasks.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      );
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(task => task.id !== id);
+      saveTasks();
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.className = "task-item";
+        li.dataset.text = task.text.toLowerCase();
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed;
+        checkbox.onclick = () => toggleTask(task.id);
+
+        const span = document.createElement("span");
+        span.className = "task-text";
+        if (task.completed) span.classList.add("completed");
+        span.textContent = task.text;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteTask(task.id);
+
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
+
+        taskList.appendChild(li);
+      });
+    }
+
+    function filterTasks() {
+      const searchValue = document.getElementById("searchInput").value.toLowerCase();
+      const listItems = document.querySelectorAll("#taskList li");
+
+      listItems.forEach(item => {
+        const text = item.dataset.text;
+        item.style.display = text.includes(searchValue) ? "flex" : "none";
+      });
+    }
+
+    // Load tasks on page load
+    window.onload = loadTasks;
+  </script>
+</body>
+</html>
+
+

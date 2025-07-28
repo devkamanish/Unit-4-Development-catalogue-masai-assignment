@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-User Shopping Cart</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 6px; margin: 4px; }
+    table { border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <h2>Login</h2>
+  <input type="text" id="usernameInput" placeholder="Enter username" />
+  <button onclick="login()">Login</button>
+
+  <div id="cartSection" style="display:none;">
+    <h3>Welcome, <span id="currentUser"></span></h3>
+    
+    <h4>Add Item</h4>
+    <input type="text" id="itemName" placeholder="Item name" />
+    <input type="number" id="price" placeholder="Price" />
+    <input type="number" id="quantity" placeholder="Quantity" />
+    <button onclick="addItem()">Add</button>
+
+    <h4>Your Cart</h4>
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <p><strong>Total: $<span id="totalCost">0</span></strong></p>
+  </div>
+
+  <script>
+    let currentUser = '';
+    let allCarts = {};
+
+    // Load cart data from localStorage
+    function loadCarts() {
+      const data = localStorage.getItem('shoppingCarts');
+      allCarts = data ? JSON.parse(data) : {};
+    }
+
+    // Save cart data to localStorage
+    function saveCarts() {
+      localStorage.setItem('shoppingCarts', JSON.stringify(allCarts));
+    }
+
+    function login() {
+      const usernameInput = document.getElementById('usernameInput');
+      const username = usernameInput.value.trim();
+      if (!username) return alert('Username required.');
+
+      loadCarts();
+      if (!allCarts[username]) {
+        allCarts[username] = [];
+      }
+      currentUser = username;
+
+      document.getElementById('currentUser').textContent = username;
+      document.getElementById('cartSection').style.display = 'block';
+      usernameInput.value = '';
+      renderCart();
+    }
+
+    function addItem() {
+      const name = document.getElementById('itemName').value.trim();
+      const price = parseFloat(document.getElementById('price').value);
+      const qty = parseInt(document.getElementById('quantity').value);
+
+      if (!name || isNaN(price) || isNaN(qty) || price <= 0 || qty <= 0) {
+        return alert('Valid item name, price, and quantity are required.');
+      }
+
+      const cart = allCarts[currentUser];
+      const existing = cart.find(item => item.itemName === name);
+
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.push({ itemName: name, price, quantity: qty });
+      }
+
+      saveCarts();
+      renderCart();
+
+      document.getElementById('itemName').value = '';
+      document.getElementById('price').value = '';
+      document.getElementById('quantity').value = '';
+    }
+
+    function removeItem(index) {
+      allCarts[currentUser].splice(index, 1);
+      saveCarts();
+      renderCart();
+    }
+
+    function updateQuantity(index, newQty) {
+      if (newQty <= 0) {
+        return removeItem(index);
+      }
+      allCarts[currentUser][index].quantity = newQty;
+      saveCarts();
+      renderCart();
+    }
+
+    function renderCart() {
+      const tbody = document.querySelector('#cartTable tbody');
+      tbody.innerHTML = '';
+      const cart = allCarts[currentUser];
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const row = document.createElement('tr');
+        const cost = item.price * item.quantity;
+        total += cost;
+
+        row.innerHTML = `
+          <td>${item.itemName}</td>
+          <td>$${item.price}</td>
+          <td>
+            <input type="number" value="${item.quantity}" min="1"
+              onchange="updateQuantity(${index}, parseInt(this.value))" />
+          </td>
+          <td>$${cost}</td>
+          <td><button onclick="removeItem(${index})">Remove</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById('totalCost').textContent = total;
+    }
+
+    // Expose updateQuantity globally (needed for inline event)
+    window.updateQuantity = updateQuantity;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="container">
+  <ul id="list">
+    <li id="item1">Item 1</li>
+    <li id="item2">Item 2</li>
+    <li id="item3">Item 3</li>
+  </ul>
+</div>
+
+<script>
+   // Get the element with id "item2"
+const item2 = document.getElementById("item2");
+
+// Add a click event listener to "item2"
+item2.addEventListener("click", function () {
+  // Get and alert the parent element's text content
+  const parentUl = item2.parentElement;
+  alert(parentUl.textContent.trim());
+
+  // Get and log the previous sibling
+  const prevSibling = item2.previousElementSibling;
+  if (prevSibling) {
+    console.log("Previous Sibling:", prevSibling.textContent);
+  }
+
+  // Get and log the next sibling
+  const nextSibling = item2.nextElementSibling;
+  if (nextSibling) {
+    console.log("Next Sibling:", nextSibling.textContent);
+  }
+});
+
+</script>
+
+</body>
+</html>

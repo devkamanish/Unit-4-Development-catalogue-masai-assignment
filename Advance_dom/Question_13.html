@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Propagation Exploration</title>
+  <style>
+    .outer, .middle, .inner {
+      padding: 30px;
+      margin: 10px;
+      border: 2px solid black;
+    }
+
+    .outer { background-color: lightcoral; }
+    .middle { background-color: lightblue; }
+    .inner { background-color: lightgreen; }
+  </style>
+</head>
+<body>
+
+  <div class="outer">
+    Outer Div
+    <button>Outer Button</button>
+
+    <div class="middle">
+      Middle Div
+      <button>Middle Button</button>
+
+      <div class="inner">
+        Inner Div
+        <button>Inner Button</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Event handler function
+    function handleEvent(phase, name) {
+      return function (event) {
+        alert(`${phase} - ${name}`);
+      };
+    }
+
+    // Capture phase (useCapture = true)
+    document.querySelector('.outer').addEventListener('click', handleEvent('Capturing', 'Outer Div'), true);
+    document.querySelector('.middle').addEventListener('click', handleEvent('Capturing', 'Middle Div'), true);
+    document.querySelector('.inner').addEventListener('click', handleEvent('Capturing', 'Inner Div'), true);
+
+    // Bubbling phase (useCapture = false)
+    document.querySelector('.outer').addEventListener('click', handleEvent('Bubbling', 'Outer Div'));
+    document.querySelector('.middle').addEventListener('click', handleEvent('Bubbling', 'Middle Div'));
+    document.querySelector('.inner').addEventListener('click', handleEvent('Bubbling', 'Inner Div'));
+
+    // Buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', function (event) {
+        alert(`Button Clicked: ${btn.textContent}`);
+        // Stop propagation only for the innermost button
+        if (btn.textContent.includes('Inner')) {
+          event.stopPropagation(); // Stops further propagation
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>
