@@ -4,36 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advance Dom</title>
-
+  <title>Document</title>
 </head>
 <body>
-<div class="red">one</div>
-<div class="red">two</div>
-<div class="red">three</div>
-<div class="red">four</div>
-<div class="red">five</div>
-<div class="red">six</div>
-<div class="red">sevenn</div>
-<div class="red">eight</div>
-<div class="red">nine</div>
-<div class="red">ten</div>
-
-
+  <input type="text" id="listInput" placeholder="Type something" oninput="updateText(event)">
+  <ul id="dynamicadd"></ul>
 </body>
+</html>
 
 <script>
-    let htmlcollection = document.getElementsByClassName('red');
-    for(let i=0;i<htmlcollection.length;i++){
-        htmlcollection[i].style.color = 'green';
-        htmlcollection[i].style.border = '1px solid black';
-    }
-    let nodeList = document.querySelectorAll('.red');
-    nodeList.forEach((ele)=>{
-      ele.style.color = 'red';
-    })
+  
+  function updateText(event) {
+    let container = document.getElementById("dynamicadd");
+
+    let li = document.createElement("li")
+    li.innerText = event.target.value;
+    container.appendChild(li);
+  }
 </script>
-</html> 
 
 
 
