@@ -1,0 +1,12 @@
+
+
+localStorage.setItem()
+localStorage.getItem()
+localStorage.removeItem()
+localStorage.clear()
+
+SessionStorage  -> temporary storage only valid until the tab is open
+
+
+
+
