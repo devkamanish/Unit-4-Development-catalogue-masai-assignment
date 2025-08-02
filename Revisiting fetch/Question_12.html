@@ -17,7 +17,7 @@
 
     <button type="submit">Submit Post</button>
   </form>
-
+   
   <h2>Response:</h2>
   <div id="responseContainer"></div> <!-- This will hold the server response -->
 
@@ -25,10 +25,10 @@
     // Get the form and container elements
     const form = document.getElementById('postForm');
     const responseContainer = document.getElementById('responseContainer');
-
+    
     form.addEventListener('submit', async (event) => {
       event.preventDefault(); // Prevent page reload
-
+    
       // Get input values
       const title = document.getElementById('title').value.trim();
       const body = document.getElementById('body').value.trim();

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Feedback</title>
+  <style>
+    .feedback {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+    }
+    .edit-form {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Feedback List</h2>
+  <div id="feedbackList"></div>
+
+  <div class="edit-form" id="editForm">
+    <h3>Edit Feedback</h3>
+    <input type="text" id="editUsername" placeholder="Username" />
+    <br />
+    <textarea id="editMessage" placeholder="Message"></textarea>
+    <br />
+    <button onclick="submitEdit()">Save</button>
+    <button onclick="cancelEdit()">Cancel</button>
+    <p id="editStatus" style="color:green;"></p>
+  </div>
+
+  <script>
+    const DATABASE_URL = "https://userdb-bf9d4-default-rtdb.asia-southeast1.firebasedatabase.app/feedback";
+    const feedbackList = document.getElementById("feedbackList");
+    const editForm = document.getElementById("editForm");
+    const editUsername = document.getElementById("editUsername");
+    const editMessage = document.getElementById("editMessage");
+    const editStatus = document.getElementById("editStatus");
+
+    let currentEditKey = null;
+
+    // Fetch feedback and display
+    function loadFeedback() {
+      feedbackList.innerHTML = '';
+      fetch(`${DATABASE_URL}.json`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data) {
+            feedbackList.textContent = "No feedback found.";
+            return;
+          }
+
+          Object.entries(data).forEach(([key, entry]) => {
+            const div = document.createElement("div");
+            div.className = "feedback";
+            div.innerHTML = `
+              <strong>${entry.username}</strong><br />
+              ${entry.message}<br />
+              <button onclick="openEdit('${key}', '${entry.username}', '${entry.message}')">Edit</button>
+            `;
+            feedbackList.appendChild(div);
+          });
+        });
+    }
+
+    // Open edit form
+    function openEdit(key, username, message) {
+      currentEditKey = key;
+      editUsername.value = username;
+      editMessage.value = message;
+      editForm.style.display = "block";
+      editStatus.textContent = "";
+    }
+
+    // Submit PATCH request to update feedback
+    function submitEdit() {
+      const updatedData = {
+        username: editUsername.value.trim(),
+        message: editMessage.value.trim()
+      };
+
+      fetch(`${DATABASE_URL}/${currentEditKey}.json`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to update feedback.");
+        return response.json();
+      })
+      .then(() => {
+        editStatus.textContent = "Feedback updated successfully!";
+        editForm.style.display = "none";
+        loadFeedback(); // refresh list
+      })
+      .catch(err => {
+        editStatus.style.color = "red";
+        editStatus.textContent = "Error: " + err.message;
+      });
+    }
+
+    function cancelEdit() {
+      editForm.style.display = "none";
+    }
+
+    // Initial load
+    loadFeedback();
+  </script>
+</body>
+</html>

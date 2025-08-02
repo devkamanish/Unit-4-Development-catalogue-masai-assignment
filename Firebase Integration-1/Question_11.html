@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase User List</title>
+  <style>
+    .user {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+    }
+    .user-name {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .user-email {
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h2>User List</h2>
+
+  <div id="userList"></div>
+  <p id="error" style="color:red;"></p>
+
+  <script>
+    const DATABASE_URL = "https://userdb-bf9d4-default-rtdb.asia-southeast1.firebasedatabase.app/users.json";
+
+    fetch(DATABASE_URL)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const userList = document.getElementById('userList');
+        if (!data) {
+          document.getElementById('error').textContent = 'No user data found.';
+          return;
+        }
+
+      
+
+        Object.values(data).forEach(user => {
+          const userDiv = document.createElement('div');
+          userDiv.className = 'user';
+
+          const name = document.createElement('div');
+          name.className = 'user-name';
+          name.textContent = user.name;
+
+          const email = document.createElement('div');
+          email.className = 'user-email';
+          email.textContent = user.email;
+
+          userDiv.appendChild(name);
+          userDiv.appendChild(email);
+          userList.appendChild(userDiv);
+        });
+      })
+      .catch(error => {
+        document.getElementById('error').textContent = `Error fetching data: ${error.message}`;
+      });
+  </script>
+
+
+</body>
+</html>
+
+

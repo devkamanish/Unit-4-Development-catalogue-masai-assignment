@@ -1,16 +1,101 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="index.js"></script>
+
+  <!-- https://moviedatabase-bcc7c-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json -->
+  <style>
+    body{
+      font-family: sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: rgba(0, 255, 255, 0.327);
+    }
+
+    input, button {
+      margin: 5px;
+      padding: 7px;
+      border-radius: 10px;
+      border: none;
+    } 
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  
-</body>
-</html>
+  <h1>Firebase movie database
+  </h1>
 
+  <input type="text" id="title" placeholder="Movie Title">
+  <input type="number" id="year" placeholder="Release Year">
+  <input type="text" id="genre" placeholder="Genre">
+  <input type="text" id="image" placeholder="Image URL">
+  <button onclick="addMovie()">
+Add movie
+  </button>
+
+  <h2>Movie List</h2>
+  <div id="movieList"></div>
+</body>
+
+
+<script>
+  async function addMovie() {
+  let movie  = {
+    title : document.getElementById("title").value,
+    year : document.getElementById("year").value,
+    genre : document.getElementById("genre").value,
+    image : document.getElementById("image").value
+  }  
+    
+  let res = await fetch("https://moviedatabase-bcc7c-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json",{
+    method : "POST",
+    headers : {
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify(movie)
+  })
+    document.getElementById("title").value ="";
+    document.getElementById("year").value  ="";
+    document.getElementById("genre").value ="";
+    document.getElementById("image").value ="";
+
+  }
+
+
+  async function getMovies() {
+    let res = await fetch("https://moviedatabase-bcc7c-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json");
+    let data = await res.json();
+
+    let movieList = document.getElementById("movieList");
+    movieList.innerHTML = ""; // Clear previous list
+
+    let moviesArray = Object.entries(data).map(([id,movie])=>({id, ...movie}));
+
+    moviesArray.forEach((movie)=>{
+      let movieDiv= document.createElement("div");
+      movieDiv.className = "movieCard";
+      movieDiv.innerHTML = `
+        <img src="${movie.image}" alt="${movie.title}" style="width: 200px; height: auto;">
+        <h3>${movie.title} (${movie.year})</h3>
+        <p>Genre: ${movie.genre}</p>
+       <button class = "delete-btn" onclick="deleteMovie('${movie.id}')">Delete</button>
+        <hr>
+      `;
+
+      movieList.appendChild(movieDiv);
+    })
+    
+    console.log(moviesArray);
+  }
+
+  getMovies();
+</script>
+</html>
 
