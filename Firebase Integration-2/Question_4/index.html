@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Library Management System</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    section { margin-bottom: 40px; }
+    .list-item { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    label { margin-right: 10px; }
+    select, input[type="text"] { margin-right: 20px; }
+    button { margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Library Management System</h1>
+
+  <section id="books-section">
+    <h2>Books</h2>
+
+    <div>
+      <label>Filter by Genre:
+        <select id="filter-genre">
+          <option value="">All</option>
+          <option>Science Fiction</option>
+          <option>Dystopian</option>
+          <option>Adventure</option>
+          <!-- Add more genres as needed -->
+        </select>
+      </label>
+
+      <label>Filter by Availability:
+        <select id="filter-availability">
+          <option value="">All</option>
+          <option value="true">Available</option>
+          <option value="false">Not Available</option>
+        </select>
+      </label>
+
+      <label>Sort by:
+        <select id="sort-books">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="publishedYear">Published Year</option>
+        </select>
+      </label>
+
+      <label>Items per page:
+        <select id="books-per-page">
+          <option>5</option>
+          <option>10</option>
+          <option>20</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="books-list"></div>
+
+    <div>
+      <button id="books-prev">Prev</button>
+      <span id="books-page-info"></span>
+      <button id="books-next">Next</button>
+    </div>
+  </section>
+
+  <section id="members-section">
+    <h2>Members</h2>
+
+    <div>
+      <label>Filter by Active Status:
+        <select id="filter-active">
+          <option value="">All</option>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+      </label>
+
+      <label>Sort by:
+        <select id="sort-members">
+          <option value="name">Name</option>
+          <option value="membershipDate">Membership Date</option>
+        </select>
+      </label>
+
+      <label>Items per page:
+        <select id="members-per-page">
+          <option>5</option>
+          <option>10</option>
+          <option>20</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="members-list"></div>
+
+    <div>
+      <button id="members-prev">Prev</button>
+      <span id="members-page-info"></span>
+      <button id="members-next">Next</button>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Novel List</title>
+  <style>
+    /* Basic styling */
+    #novel-list div {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    label {
+      margin-right: 10px;
+    }
+    input, select {
+      margin-right: 20px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Novels</h1>
+
+  <!-- Search -->
+  <label for="search-input">Search (Title/Author):</label>
+  <input type="text" id="search-input" placeholder="Search novels...">
+
+  <!-- Filter by release year -->
+  <label for="year-filter">Filter by Release Year:</label>
+  <select id="year-filter">
+    <option value="">All Years</option>
+  </select>
+
+  <!-- Sort by price -->
+  <label for="price-sort">Sort by Price:</label>
+  <select id="price-sort">
+    <option value="">None</option>
+    <option value="asc">Ascending</option>
+    <option value="desc">Descending</option>
+  </select>
+
+  <div id="novel-list"></div>
+
+  <script>
+    let allNovels = [];
+
+    // Fetch data
+    fetch('https://noveldb-85511-default-rtdb.asia-southeast1.firebasedatabase.app/.json')
+      .then(response => response.json())
+      .then(data => {
+        allNovels = data;
+        populateYearFilter();
+        renderNovels(allNovels);
+      })
+      .catch(error => console.error('Error loading data:', error));
+
+    // Populate release year filter dropdown
+    function populateYearFilter() {
+      const years = [...new Set(allNovels.map(novel => novel.release_year))].sort();
+      const yearFilter = document.getElementById('year-filter');
+      years.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearFilter.appendChild(option);
+      });
+    }
+
+    // Render novel list based on filtered/sorted/searched data
+    function renderNovels(novels) {
+      const list = document.getElementById('novel-list');
+      list.innerHTML = ''; // Clear current list
+
+      if (novels.length === 0) {
+        list.textContent = 'No novels found.';
+        return;
+      }
+
+      novels.forEach(novel => {
+        const item = document.createElement('div');
+        item.innerHTML = `
+          <h3>${novel.title}</h3>
+          <p><strong>Author:</strong> ${novel.author}</p>
+          <p><strong>Price:</strong> $${novel.price}</p>
+          <p><strong>Release Year:</strong> ${novel.release_year}</p>
+          <p><strong>Genre:</strong> ${novel.genre}</p>
+          <hr/>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    // Apply filters, sorting and search
+    function updateList() {
+      let filtered = [...allNovels];
+
+      // Filter by year
+      const yearFilter = document.getElementById('year-filter').value;
+      if (yearFilter) {
+        filtered = filtered.filter(novel => novel.release_year.toString() === yearFilter);
+      }
+
+      // Search by title or author
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      if (searchTerm) {
+        filtered = filtered.filter(novel =>
+          novel.title.toLowerCase().includes(searchTerm) ||
+          novel.author.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      // Sort by price
+      const sortOrder = document.getElementById('price-sort').value;
+      if (sortOrder === 'asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortOrder === 'desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+
+      renderNovels(filtered);
+    }
+
+    // Event listeners for inputs
+    document.getElementById('year-filter').addEventListener('change', updateList);
+    document.getElementById('price-sort').addEventListener('change', updateList);
+    document.getElementById('search-input').addEventListener('input', updateList);
+
+  </script>
+</body>
+</html>

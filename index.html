@@ -18,13 +18,26 @@
     input, button {
       margin: 5px;
       padding: 7px;
-      border-radius: 10px;
-      border: none;
+      
     } 
-    button {
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
+  
+    #movieList{
+      display: grid;
+      grid-template-columns: repeat(2,200px);
+      gap: 20px;
+      justify-content: center;
+    }
+    .movieCard{
+      background-color: white;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .movieCard img{
+      /* display: none; */
+      width: 100%;
+      height: 160px;
+      border: none;
     }
   </style>
 </head>
@@ -46,6 +59,7 @@ Add movie
 
 
 <script>
+
   async function addMovie() {
   let movie  = {
     title : document.getElementById("title").value,
@@ -82,20 +96,31 @@ Add movie
       let movieDiv= document.createElement("div");
       movieDiv.className = "movieCard";
       movieDiv.innerHTML = `
-        <img src="${movie.image}" alt="${movie.title}" style="width: 200px; height: auto;">
+        <img src="${movie.image}" alt="${movie.title}" >
         <h3>${movie.title} (${movie.year})</h3>
         <p>Genre: ${movie.genre}</p>
-       <button class = "delete-btn" onclick="deleteMovie('${movie.id}')">Delete</button>
+       <button class = "delete-btn" onclick="deleteMovies('${movie.id}')">Delete</button>
         <hr>
       `;
-
+  
       movieList.appendChild(movieDiv);
     })
     
     console.log(moviesArray);
   }
 
+
+  async function deleteMovies(movieId){
+    await fetch(`https://moviedatabase-bcc7c-default-rtdb.asia-southeast1.firebasedatabase.app/movies/${movieId}.json`,{
+      method : "DELETE"
+
+      
+    })
+
+   getMovies();
+  }
   getMovies();
+
 </script>
 </html>
 
