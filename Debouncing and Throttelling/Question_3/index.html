@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Throttled Image Slider</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f2f2f2;
+      padding: 30px;
+    }
+    img {
+      width: 600px;
+      height: 400px;
+      object-fit: cover;
+      border: 4px solid #333;
+      border-radius: 8px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #slideNumber {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Throttled Image Slider</h1>
+  <img id="slider" src="https://picsum.photos/600/400?random=1" alt="Random Image">
+  <div>
+    <button onclick="prevSlide()">Previous</button>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+  <div id="slideNumber">Slide 1</div>
+
+  <script src="script.js"></script>
+  
+</body>
+</html>

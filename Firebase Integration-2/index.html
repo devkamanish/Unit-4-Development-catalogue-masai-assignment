@@ -4,11 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+    body{
+      font-family: sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: rgba(0, 255, 255, 0.126);
+    }
+
+    input, button , select{
+      margin: 5px;
+      padding: 7px;
+      
+    } 
+  
+    #movieList{
+      display: grid;
+      grid-template-columns: repeat(2,200px);
+      gap: 20px;
+      justify-content: center;
+    }
+    .movieCard{
+      background-color: white;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .movieCard img{
+      /* display: none; */
+      width: 100%;
+      height: 160px;
+      border: none;
+    }
+
+    .delete-btn{
+        background-color: red;
+        border: none;
+        color: white;
+    }
+  </style>
 </head>
+
 <body>
     
-
-
     
+ <input type="text" id="movieId" class="readOnly" readonly>
+ <input type="text" id="title" placeholder="Movie Title" required>
+  <input type="number" id="year" placeholder="Release Year" required>
+  <input type="text" id="genre" placeholder="Genre" required>
+  <input type="text" id="image" placeholder="Image URL"required>
+    <button onclick="addOrUpdateMovie()">Save Movie</button>
+    <h3>Filter & sort Movies</h3>
+    <!-- Filter -->
+    <input type="number" id="filterYear" placeholder="Filter by year">
+    <select name="" id="filterGenre">
+        <option value="">All Genre</option>
+        <option value="Sci-Fi">Sc-Fi</option>
+        <option value="Action">Action</option>
+        <option value="Horror">Horror</option>
+    </select>
+    <button onclick="applyFilterAndSort()">Apply Filter</button>
+    
+    <!-- Sorting -->
+        <select name="sorting" id="sortBy">
+            <option value="year-asc">Year (Oldest First)</option>
+            <option value="year-desc">Year (Newest First)</option>
+        </select>
+        <button onclick="applyFilterAndSort()">Sort Movies</button>
+
+    <h3>Movie List</h3>
+    <div id="movieList"></div>
+
+
 </body>
+
+<script>
+    let baseUrl = "https://moviedatabase-bcc7c-default-rtdb.asia-southeast1.firebasedatabase.app/movies"
+    async function fetchMovies(){
+        let res = await fetch(`${baseUrl}.json`)
+        let data = await res.json()
+        if(!data) return []
+
+        return Object.entries(data).map(([id,movie])=>({id, ...movie}))
+    }
+
+
+    async function applyFilterAndSort(){
+        let movies = await fetchMovies()
+        let selectedYear  = document.getElementById("filterYear").value
+        let selectedGenre  = document.getElementById("filterGenre").value
+        let sortBy = document.getElementById("sortBy").value
+
+        let filteredMovies = movies.filter((movie)=>{  
+            return (
+                (selectedYear=== ""  || movie.year == selectedYear) &&
+                (selectedGenre === "" || movie.genre ==selectedGenre)
+            )
+             
+        })
+
+        filteredMovies.sort((a,b)=>{
+            if(sortBy == "year-asc") return a.year-b.year
+            if(sortBy == "year-desc") return b.year - a.year    
+        })
+        
+        displayMovies(filteredMovies)
+    }
+
+   async function displayMovies(movies){
+    
+    let movieList = document.getElementById('movieList')
+    movieList.innerHTML = ""
+
+
+   if(movies.length ==0 ){
+    movieList.innerHTML = `
+    <p> No movies found</p>
+    `
+   }
+
+   movies.forEach((movie)=>{
+    let movieCard = document.createElement("div")
+    movieCard.className = "movie-card"
+
+    movieCard.innerHTML  = 
+    `
+    <img src="${movie.image}" alt="">
+    <h4>${movie.title} (${movie.year})</h4>
+    <p>${movie.genre}</p>
+    <button class = "edit-btn" onclick = "editMovies('${movie.id}','${movie.title}','${movie.year}','${movie.genre}','${movie.image}')">Edit</button>
+    <button class = "delete-btn" onclick = "deleteMovies('${movie.id}')">Delete</button>
+    `
+
+    movieList.appendChild(movieCard)
+   })
+   }
+  
+
+ async function deleteMovies(movieId){
+    await fetch(`${baseUrl}/${movieId}.json`,{
+        method : "DELETE"
+    })
+
+applyFilterAndSort()
+ }
+
+ async function editMovies(id,title,year,genre,image) {
+
+    document.getElementById("movieId").value  = id
+    document.getElementById("title").value = title
+    document.getElementById("year").value  = year
+    document.getElementById("genre").value = genre
+    document.getElementById("image").value  = image
+ }
+
+ async function addOrUpdateMovie() {
+    let movieId = document.getElementById("movieId").value;
+    let movie = {
+        title : document.getElementById('title').value,
+        year : document.getElementById('year').value,
+        genre : document.getElementById('genre').value,
+        image  : document.getElementById('image').value
+    }
+
+    if(movieId){
+        await fetch(`${baseUrl}/${movieId}.json`,{
+            method : "PATCH",
+            headers  : {
+                'Content-Type': "application/json"
+            },
+            body : JSON.stringify(movie)
+        });
+        document.getElementById("movieId").value = "";
+
+    }else{
+         await fetch(`${baseUrl}.json`,{
+            method : "POST",
+            headers : {'Content-Type' : "application/json" },
+            body : JSON.stringify(movie)
+
+
+         })
+    }
+     document.getElementById("movieId").value  = ""
+    document.getElementById("title").value = ""
+    document.getElementById("year").value  = ""
+    document.getElementById("genre").value = ""
+    document.getElementById("image").value  = ""
+
+
+    applyFilterAndSort()
+ }
+applyFilterAndSort()
+</script>
 </html>
+
+
+
+
