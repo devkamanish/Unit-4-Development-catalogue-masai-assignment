@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <h2>Welcome to Your Dashboard</h2>
+  <p id="greeting"></p>
+  <button onclick="logout()">Logout</button>
+  <h3>Products:</h3>
+  <div id="products"></div>
+
+  <script>
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("greeting").innerText = `Hello, ${localStorage.getItem("userName") || "User"}`;
+
+    fetch("https://fakestoreapi.com/products")
+      .then(res => res.json())
+      .then(products => {
+        const container = document.getElementById("products");
+        products.forEach(p => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <h4>${p.title}</h4>
+            <img src="${p.image}" width="100"><br>
+            <strong>Price: $${p.price}</strong>
+            <hr>
+          `;
+          container.appendChild(div);
+        });
+      });
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -31,9 +31,8 @@
       let filteredProducts = selectedCategory === "all" ? data : data.filter((ele)=>{
         return ele.category === selectedCategory;
       })
-
-      console.log(filteredProducts);
-
+      
+  
       let container = document.getElementById("container")
       container.innerHTML = ""; // Clear previous content
 
@@ -47,6 +46,7 @@
          container.append(divv )
       })
       
+
     } 
 
     filterByCategory();

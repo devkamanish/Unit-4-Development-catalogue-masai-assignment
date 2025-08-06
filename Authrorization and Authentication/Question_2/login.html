@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><title>Login</title></head>
+<body>
+  <h2>Login</h2>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
+
+  <script>
+    const DB_URL = "https://ecomerceauthdb-default-rtdb.asia-southeast1.firebasedatabase.app/user.json";
+
+    function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      fetch(DB_URL)
+        .then(res => res.json())
+        .then(data => {
+          let matched = false;
+          for (let key in data) {
+            const user = data[key];
+            if (user.email === email && user.password === password) {
+              matched = true;
+              localStorage.setItem("role", user.role);
+              localStorage.setItem("userEmail", user.email);
+
+              if (user.role === "Admin") {
+                window.location.href = "adminDashboard.html";
+              } else {
+                window.location.href = "userDashboard.html";
+              }
+              break;
+            }
+          }
+          if (!matched) alert("Incorrect email or password!");
+        });
+    }
+  </script>
+</body>
+</html>

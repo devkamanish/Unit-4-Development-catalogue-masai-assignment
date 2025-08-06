@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+</head>
+<body>
+  <h2>Register</h2>
+  <input type="text" id="name" placeholder="Name" required><br><br>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <input type="password" id="password" placeholder="Password" required><br><br>
+  <button onclick="register()">Register</button>
+
+  <script>
+    const BASE_URL = "https://dashboardappauttdb-default-rtdb.asia-southeast1.firebasedatabase.app/users.json";
+
+    function register() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!name || !email || !password) {
+        alert("All fields are required!");
+        return;
+      }
+  
+      const user = { name, email, password };
+
+      fetch(BASE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      })
+      .then(() => {
+        alert("Registration Successful! Please log in.");
+        window.location.href = "login.html";
+      })
+      .catch(() => alert("Registration failed. Try again."));
+    }
+  </script>
+</body>
+</html>

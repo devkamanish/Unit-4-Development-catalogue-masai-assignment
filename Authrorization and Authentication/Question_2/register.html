@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head><title>Register</title></head>
+<body>
+  <h2>Register</h2>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <select id="role">
+    <option value="User">User</option>
+    <option value="Admin">Admin</option>
+  </select><br><br>
+  <button onclick="register()">Register</button>
+
+  <script>
+    const DB_URL = "https://ecomerceauthdb-default-rtdb.asia-southeast1.firebasedatabase.app/user.json";
+
+    function register() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const role = document.getElementById("role").value;
+
+      if (!email || !password) {
+        alert("All fields are required!");
+        return;
+      }
+
+      const user = { email, password, role };
+
+      fetch(DB_URL, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(() => {
+        alert("Registration successful!");
+        window.location.href = "login.html";
+      })
+      .catch(() => alert("Failed to register."));
+    }
+  </script>
+</body>
+</html>
